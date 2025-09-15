@@ -1,0 +1,36 @@
+{
+  "name": "okimi-chan-bot",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maksym-Ryaboshapka/okimi-chan-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Maksym-Ryaboshapka/okimi-chan-bot/issues"
+  },
+  "homepage": "https://github.com/Maksym-Ryaboshapka/okimi-chan-bot#readme",
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "node-telegram-bot-api": "^0.66.0",
+    "osu-web.js": "^2.6.0",
+    "puppeteer-core": "^24.20.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "@eslint/json": "^0.13.2",
+    "eslint": "^9.35.0",
+    "globals": "^16.4.0",
+    "nodemon": "^3.1.10"
+  }
+}
