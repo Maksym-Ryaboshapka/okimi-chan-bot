@@ -13,7 +13,7 @@ const puppeteer = require('puppeteer-core');
   const cssPath = path.join(__dirname, 'userCard.css');
   const css = fs.readFileSync(cssPath, 'utf8');
 
-  const data = { username: 'MAX', age: 2 };
+  const data = { username: 'MessengerMAX', age: 2 };
 
   const html = `
     <html>
@@ -28,8 +28,8 @@ const puppeteer = require('puppeteer-core');
   `;
 
   const browser = await puppeteer.launch({
-    // executablePath: chromium.path,
-    executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    executablePath: chromium.path,
+    // executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     headless: true,
   });
 
