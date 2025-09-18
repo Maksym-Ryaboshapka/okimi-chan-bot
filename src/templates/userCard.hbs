@@ -1,4 +1,33 @@
 <div class="user-card">
-  <h2>{{username}}</h2>
-  <p>Возраст: {{age}}</p>
+  <div class="header">
+    <img class="pfp" src="{{pfp}}" alt="Avatar">
+    <div class="user-info">
+      <h2>{{username}}</h2>
+      <p class="country">#{{country}}</p>
+      <p class="rank">#{{worldTop}}</p>
+      <p class="country-rank">{{countryTop}}</p>
+    </div>
+  </div>
+
+  <div class="levelsRating">
+    <div class="level-box a">A: {{a}}</div>
+    <div class="level-box s yellow" style="color: rgb(255, 255, 107);">S: {{goldenS}}</div>
+    <div class="level-box s">S: {{silverS}}</div>
+    <div class="level-box ss yellow" style="color: rgb(255, 255, 119);">SS: {{goldenSS}}</div>
+    <div class="level-box ss">SS: {{silverSS}}</div>
+  </div>
+
+<div class="level-progress">
+  <span>Level {{level}}</span>
+  <div class="progress-bar">
+    <div class="progress" style="width: {{levelProgress}}%;"></div>
+  </div>
+</div
+
+  <div class="bottomBox">
+    <p>pp: {{pp}}</p>
+    <p>Accuracy: {{accuracy}}%</p>
+    <p>Time Played: {{timePlayes}}h</p>
+    <p>Points: {{points}}m</p>
+  </div>
 </div>

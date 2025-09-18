@@ -5,7 +5,7 @@ const handlebars = require("handlebars");
 const puppeteer = require("puppeteer-core");
 
 async function renderImage(data) {
-  // Абсолютный путь до корня проекта
+
   const rootPath = path.join(__dirname, "..");
 
   const templatePath = path.join(rootPath, "templates", "userCard.hbs");
