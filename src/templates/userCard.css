@@ -3,10 +3,10 @@
   padding: 10px;
   border-radius: 8px;
   width: 200px;
-  background-color: #00ff0d;
+  background-color: #e77cff;
 }
 
 .user-card h2 {
   margin: 0 0 8px 0;
-  color: rgb(255, 73, 73);
+  color: rgb(0, 0, 0);
 }
