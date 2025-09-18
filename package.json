@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/Maksym-Ryaboshapka/okimi-chan-bot#readme",
   "dependencies": {
+    "chromium": "^3.0.3",
     "dotenv": "^17.2.2",
+    "handlebars": "^4.7.8",
     "node-telegram-bot-api": "^0.66.0",
     "osu-web.js": "^2.6.0",
     "puppeteer-core": "^24.20.0"
