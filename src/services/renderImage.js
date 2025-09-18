@@ -5,10 +5,10 @@ const handlebars = require("handlebars");
 const puppeteer = require("puppeteer-core");
 
 async function renderImage(data) {
+  // Абсолютный путь до корня проекта
   const rootPath = path.join(__dirname, "..");
 
   const templatePath = path.join(rootPath, "templates", "userCard.hbs");
-  console.log(templatePath);
   const templateSource = fs.readFileSync(templatePath, "utf8");
   const template = handlebars.compile(templateSource);
 
@@ -41,9 +41,13 @@ async function renderImage(data) {
       path: path.join(rootPath, "templates", "userCard.jpg"),
       type: "jpeg",
     });
+
+// +----------------------------------------+
+// | тут надо написать отправку фото в боте |
+// +----------------------------------------+
+
+// 
     console.log("сохранилась");
-  } else {
-    console.log("элемент .user-card не найден");
   }
 
   await browser.close();
