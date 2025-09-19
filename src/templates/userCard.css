@@ -8,8 +8,7 @@
   font-family: sans-serif;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0,0,0,0.6);
-  background-image: url('/mnt/data/photo_2025-09-18 17.16.31.jpeg'); /* фон из картинки */
+  background-image: url("PATH");
   background-size: cover;
 }
 
@@ -77,8 +76,34 @@
   justify-content: space-between;
   margin-top: 15px;
   font-size: 14px;
+  flex-direction: row;
 }
 
-/* .yellow{
-  color: rgb(255, 255, 163);
-} */
+.statTitle{
+  background-color: #4f4f4f;
+  padding: 5px;
+  border-radius: 5px;
+}
+.bottomBox p {
+  display: flex;
+  gap: 2px;
+  flex-direction: column;
+	
+	font-size: 17px;
+}
+
+
+
+.worldRank{
+	font-size: 24px;
+	margin: 0;
+}
+.countryRank{
+	font-size: 20px;
+	margin: 0;
+}
+
+#country{
+	font-size: 16px;
+	margin-bottom: 10px;
+}

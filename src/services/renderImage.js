@@ -5,7 +5,6 @@ const handlebars = require("handlebars");
 const puppeteer = require("puppeteer-core");
 
 async function renderImage(data) {
-
   const rootPath = path.join(__dirname, "..");
 
   const templatePath = path.join(rootPath, "templates", "userCard.hbs");
@@ -13,7 +12,7 @@ async function renderImage(data) {
   const template = handlebars.compile(templateSource);
 
   const cssPath = path.join(rootPath, "templates", "userCard.css");
-  const css = fs.readFileSync(cssPath, "utf8");
+  let css = fs.readFileSync(cssPath, "utf8");
 
   const html = `
     <html>
@@ -42,11 +41,10 @@ async function renderImage(data) {
       type: "jpeg",
     });
 
-// +----------------------------------------+
-// | тут надо написать отправку фото в боте |
-// +----------------------------------------+
+    // +----------------------------------------+
+    // | тут надо написать отправку фото в боте |
+    // +----------------------------------------+
 
-// 
     console.log("сохранилась");
   }
 
