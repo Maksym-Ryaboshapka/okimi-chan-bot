@@ -8,8 +8,7 @@
   font-family: sans-serif;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0,0,0,0.6);
-  background-image: url('/mnt/data/photo_2025-09-18 17.16.31.jpeg'); /* фон из картинки */
+  background-image: url("PATH");
   background-size: cover;
 }
 
