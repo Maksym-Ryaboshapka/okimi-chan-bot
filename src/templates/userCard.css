@@ -8,8 +8,27 @@
   font-family: sans-serif;
   position: relative;
   overflow: hidden;
-  background-image: url("PATH");
-  background-size: cover;
+  background-image: url("https://github.com/Maksym-Ryaboshapka/okimi-chan-bot/blob/dev/bg.png?raw=true");
+  /* background-size: 100px 100px; */
+  background-repeat: repeat;
+  position: relative;
+}
+
+.user-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.user-card > * {
+  position: relative;
+  z-index: 2;
 }
 
 .header {
@@ -18,8 +37,8 @@
 }
 
 .pfp {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 15px;
   object-fit: cover;
 }
@@ -57,8 +76,9 @@
 }
 
 .progress-bar {
-  width: 100%;
+  width: 80%;
   height: 12px;
+  display: inline-block;
   background: rgba(255,255,255,0.2);
   border-radius: 6px;
   overflow: hidden;
@@ -77,6 +97,10 @@
   margin-top: 15px;
   font-size: 14px;
   flex-direction: row;
+  
+  /* background-color: #111; */
+  /* width: 100%;
+  margin-bottom: 0px; */
 }
 
 .statTitle{
@@ -106,4 +130,13 @@
 #country{
 	font-size: 16px;
 	margin-bottom: 10px;
+}
+
+.bottomBox {
+  /* background-color: #111; */
+  width: 100%;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-bottom: -20px;
+  padding: 10px 20px;
 }

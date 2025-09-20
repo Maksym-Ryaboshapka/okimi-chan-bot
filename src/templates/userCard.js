@@ -3,16 +3,16 @@ const { renderImage } = require("../services/renderImage");
 const data = {
   username: "MessengerMAX",
   country: "Ukraine",
-  worldTop: 12000000,
+  worldTop: 1200000000000,
   countryTop: 1,
 
   a: 10,
-  goldenS: 7,
+  goldenS: 0.7,
   silverS: 0,
-  goldenSS: 3,
-  silverSS: 1,
-  level: 31,
-  levelProgress: 68,
+  goldenSS: 20,
+  silverSS: 0,
+  level: 122,
+  levelProgress: 40,
 
   pp: 484,
   accuracy: 19,
