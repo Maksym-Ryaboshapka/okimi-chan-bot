@@ -1,6 +1,19 @@
 const { Client } = require("osu-web.js");
-const { OSU_TOKEN } = require("./config/env");
+const createOsuToken = require("./services/createOsuToken");
+const { OSU_CLIENT_ID, OSU_CLIENT_SECRET } = require("./config/env");
+const { getToken, setToken } = require("./services/getOsuToken");
 
-const api = new Client(OSU_TOKEN);
+async function getOsuClient() {
+  let token;
+  try {
+    token = getToken();
+  } catch {
+    token = await createOsuToken(OSU_CLIENT_ID, OSU_CLIENT_SECRET);
+    setToken(token);
+  }
 
-module.exports = api;
+  const api = new Client(token);
+  return api;
+}
+
+module.exports = getOsuClient;

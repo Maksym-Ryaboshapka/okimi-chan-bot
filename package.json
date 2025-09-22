@@ -21,12 +21,13 @@
   },
   "homepage": "https://github.com/Maksym-Ryaboshapka/okimi-chan-bot#readme",
   "dependencies": {
-    "chromium": "^3.0.3",
+    "axios": "^1.12.2",
     "dotenv": "^17.2.2",
     "handlebars": "^4.7.8",
     "node-telegram-bot-api": "^0.66.0",
     "osu-web.js": "^2.6.0",
-    "puppeteer-core": "^24.20.0"
+    "puppeteer-core": "^24.20.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",

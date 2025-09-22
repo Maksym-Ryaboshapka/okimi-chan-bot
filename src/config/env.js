@@ -1,5 +1,7 @@
 require("dotenv").config();
 
 module.exports = {
-  OSU_TOKEN: process.env.OSU_TOKEN
+  OSU_CLIENT_ID: process.env.OSU_CLIENT_ID,
+  OSU_CLIENT_SECRET: process.env.OSU_CLIENT_SECRET,
+  BOT_TOKEN: process.env.BOT_TOKEN
 };
