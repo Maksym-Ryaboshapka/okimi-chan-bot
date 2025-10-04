@@ -2,7 +2,7 @@
   "name": "okimi-chan-bot",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
@@ -26,7 +26,7 @@
     "handlebars": "^4.7.8",
     "node-telegram-bot-api": "^0.66.0",
     "osu-web.js": "^2.6.0",
-    "puppeteer-core": "^24.20.0",
+    "playwright": "^1.55.1",
     "uuid": "^13.0.0"
   },
   "devDependencies": {

@@ -3,14 +3,13 @@ const getOsuClient = require("../osuClient");
 const getUser = async (username) => {
   try {
     const client = await getOsuClient();
-    const user = await client.users.getUser(username, {
+
+    return await client.users.getUser(username, {
       urlParams: {
         mode: "osu"
       }
     });
-
-    return user;
-  } catch (e) {
+  } catch {
     return null;
   }
 };

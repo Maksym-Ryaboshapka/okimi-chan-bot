@@ -18,6 +18,7 @@ const onUser = async (bot, msg, match) => {
     return;
   }
 
+  const usernameApi = user.username;
   const country = user.country.name;
   const worldTop = user.statistics.global_rank;
   const countryTop = user.statistics.country_rank;
@@ -38,7 +39,7 @@ const onUser = async (bot, msg, match) => {
   const pfp = user.avatar_url;
 
   const data = {
-    username,
+    username: usernameApi,
     country,
     worldTop,
     countryTop,

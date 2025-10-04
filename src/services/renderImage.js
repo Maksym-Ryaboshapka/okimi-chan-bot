@@ -1,9 +1,9 @@
 const fs = require("fs");
 const path = require("path");
-const {v4: uuid}  = require("uuid");
+const {v4: uuid} = require("uuid");
 const getChromiumPath = require("../utils/getChromium");
 const handlebars = require("handlebars");
-const puppeteer = require("puppeteer-core");
+const {chromium} = require("playwright");
 
 async function renderImage(data) {
   const rootPath = path.join(__dirname, "..");
@@ -15,10 +15,10 @@ async function renderImage(data) {
   const template = handlebars.compile(templateSource);
 
   const cssPath = path.join(rootPath, "templates", "userCard.css");
-  let css = fs.readFileSync(cssPath, "utf8");
+  const css = fs.readFileSync(cssPath, "utf8");
 
   const html = `
-    <html>
+    <html lang="en">
       <head>
         <meta charset="utf-8">
         <style>${css}</style>
@@ -29,26 +29,20 @@ async function renderImage(data) {
     </html>
   `;
 
-  const browser = await puppeteer.launch({
+  const browser = await chromium.launch({
     executablePath: chromiumPath,
     headless: true,
   });
 
   const page = await browser.newPage();
-  await page.setContent(html, {waitUntil: "networkidle0"});
+  await page.setContent(html, {waitUntil: "networkidle"});
 
-  const element = await page.$(".user-card");
-  if (element) {
+  const element = await page.locator(".user-card");
+  if (await element.count() > 0) {
     await element.screenshot({
       path: path.join(rootPath, "templates", `userCard-${cardId}.jpg`),
       type: "jpeg",
     });
-
-    // +----------------------------------------+
-    // | тут надо написать отправку фото в боте |
-    // +----------------------------------------+
-
-    console.log("сохранилась");
   }
 
   await browser.close();
