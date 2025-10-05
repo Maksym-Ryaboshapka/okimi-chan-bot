@@ -1,43 +1,27 @@
 {
   "name": "okimi-chan-bot",
-  "version": "0.0.1",
-  "description": "",
-  "main": "src/index.js",
+  "module": "src/index.ts",
+  "type": "module",
+  "private": false,
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "build": "tsc",
-    "dev": "ts-node-dev src/index.ts",
-    "test": "jest"
+    "start": "bun run src/index.ts",
+    "dev": "bun run --watch src/index.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Maksym-Ryaboshapka/okimi-chan-bot.git"
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^24.6.2",
+    "@types/node-telegram-bot-api": "^0.64.11"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/Maksym-Ryaboshapka/okimi-chan-bot/issues"
+  "peerDependencies": {
+    "typescript": "^5"
   },
-  "homepage": "https://github.com/Maksym-Ryaboshapka/okimi-chan-bot#readme",
   "dependencies": {
     "axios": "^1.12.2",
-    "dotenv": "^17.2.2",
+    "dotenv": "^17.2.3",
     "handlebars": "^4.7.8",
     "node-telegram-bot-api": "^0.66.0",
     "osu-web.js": "^2.6.0",
     "playwright": "^1.55.1",
     "uuid": "^13.0.0"
-  },
-  "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "@types/node": "^24.6.2",
-    "@types/node-telegram-bot-api": "^0.64.11",
-    "jest": "^30.2.0",
-    "ts-jest": "^29.4.4",
-    "ts-node": "^10.9.2",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.9.3"
   }
 }

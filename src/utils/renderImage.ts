@@ -4,7 +4,7 @@ import {v4 as uuid} from "uuid";
 import getChromium from "./getChromium";
 import * as handlebars from "handlebars";
 import {chromium} from "playwright";
-import ClearUser from "../types/ClearUser.types";
+import type ClearUser from "../types/ClearUser.types";
 
 export default async function renderImage(data: ClearUser): Promise<string> {
   const rootPath = path.resolve(__dirname, "..");
