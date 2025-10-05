@@ -58,7 +58,7 @@ export default async function onUser(bot: TelegramBot, msg: Message, match: RegE
     points,
     pfp
   };
-
+  
   const cardId = await renderImage(data);
 
   const rootPath = path.resolve(__dirname, "..", "..");

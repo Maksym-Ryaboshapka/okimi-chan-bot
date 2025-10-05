@@ -33,6 +33,25 @@ export default async function renderImage(data: ClearUser): Promise<string> {
   const browser = await chromium.launch({
     executablePath: chromiumPath,
     headless: true,
+    args: [
+      "--disable-gpu",
+      "--disable-extensions",
+      "--disable-background-networking",
+      "--disable-default-apps",
+      "--disable-sync",
+      "--disable-translate",
+      "--disable-popup-blocking",
+      "--no-sandbox",
+      "--disable-plugins",
+      "--disable-logging",
+      "--disable-software-rasterizer",
+      "--disable-background-timer-throttling",
+      "--disable-renderer-backgrounding",
+      "--disable-accelerated-2d-canvas",
+      "--disable-dev-shm-usage",
+      "--no-zygote",
+      "--single-process",
+    ],
   });
 
   const page = await browser.newPage();
