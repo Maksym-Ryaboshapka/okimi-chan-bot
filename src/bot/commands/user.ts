@@ -60,7 +60,6 @@ export default async function onUser(bot: TelegramBot, msg: Message, match: RegE
   };
 
   const cardId = await renderImage(data);
-  console.log(cardId);
 
   const rootPath = path.resolve(__dirname, "..", "..");
   const cardPath = path.resolve(rootPath, "templates", `userCard-${cardId}.jpg`);
