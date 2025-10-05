@@ -1,9 +1,11 @@
-const fs = require("fs");
-const path = require("path");
-const getUser = require("../../services/getUser");
-const {renderImage} = require("../../services/renderImage");
+import TelegramBot, {Message} from "node-telegram-bot-api";
+import fs from "fs";
+import path from "path";
+import getUser from "../../services/osu/getUser";
+import renderImage from "../../utils/renderImage";
+import ClearUser from "../../types/ClearUser.types";
 
-const onUser = async (bot, msg, match) => {
+export default async function onUser(bot: TelegramBot, msg: Message, match: RegExpExecArray | null): Promise<void | undefined> {
   const username = match && match[1] ? match[1].trim() : null;
 
   if (!username) {
@@ -38,7 +40,7 @@ const onUser = async (bot, msg, match) => {
 
   const pfp = user.avatar_url;
 
-  const data = {
+  const data: ClearUser = {
     username: usernameApi,
     country,
     worldTop,
@@ -58,13 +60,10 @@ const onUser = async (bot, msg, match) => {
   };
 
   const cardId = await renderImage(data);
-  console.log(cardId);
 
-  const rootPath = path.join(__dirname, "..", "..");
-  const cardPath = path.join(rootPath, "templates", `userCard-${cardId}.jpg`);
+  const rootPath = path.resolve(__dirname, "..", "..");
+  const cardPath = path.resolve(rootPath, "templates", `userCard-${cardId}.jpg`);
 
   await bot.sendPhoto(msg.chat.id, cardPath);
   fs.rmSync(cardPath);
-};
-
-module.exports = onUser;
+}
