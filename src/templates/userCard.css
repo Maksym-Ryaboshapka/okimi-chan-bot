@@ -7,7 +7,6 @@ html, body {
 }
 
 .user-card {
-  /*width: 600px;*/
   width: 680px;
   height: 340px;
   margin: 0;
@@ -18,17 +17,10 @@ html, body {
   left: 0;
   right: 0;
   bottom: 0;
-  /*padding: 20px;*/
-  /* border-radius: 20px; */
-  background: #111;
+  background: #111 url("https://github.com/Maksym-Ryaboshapka/okimi-chan-bot/blob/dev/bg.png?raw=true") repeat;
   color: #fff;
   font-family: sans-serif;
-  /*position: relative;*/
   overflow: hidden;
-  background-image: url("https://github.com/Maksym-Ryaboshapka/okimi-chan-bot/blob/dev/bg.png?raw=true");
-  /* background-size: 100px 100px; */
-  background-repeat: repeat;
-  /*position: relative;*/
 }
 
 .user-card::before {
@@ -114,7 +106,7 @@ html, body {
   margin-top: 15px;
   font-size: 14px;
   flex-direction: row;
-  
+
   /* background-color: #111; */
   /* width: 100%;
   margin-bottom: 0px; */
@@ -129,24 +121,24 @@ html, body {
   display: flex;
   gap: 2px;
   flex-direction: column;
-	
-	font-size: 17px;
+
+  font-size: 17px;
 }
 
 
 
 .worldRank{
-	font-size: 24px;
-	margin: 0;
+  font-size: 24px;
+  margin: 0;
 }
 .countryRank{
-	font-size: 20px;
-	margin: 0;
+  font-size: 20px;
+  margin: 0;
 }
 
 #country{
-	font-size: 16px;
-	margin-bottom: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
 }
 
 .bottomBox {

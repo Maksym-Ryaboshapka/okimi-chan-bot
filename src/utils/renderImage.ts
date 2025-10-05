@@ -1,20 +1,21 @@
-const fs = require("fs");
-const path = require("path");
-const {v4: uuid} = require("uuid");
-const getChromiumPath = require("../utils/getChromium");
-const handlebars = require("handlebars");
-const {chromium} = require("playwright");
+import fs from "fs";
+import path from "path";
+import {v4 as uuid} from "uuid";
+import getChromium from "./getChromium";
+import * as handlebars from "handlebars";
+import {chromium} from "playwright";
+import ClearUser from "../types/ClearUser.types";
 
-async function renderImage(data) {
-  const rootPath = path.join(__dirname, "..");
-  const chromiumPath = await getChromiumPath();
+export default async function renderImage(data: ClearUser): Promise<string> {
+  const rootPath = path.resolve(__dirname, "..");
+  const chromiumPath = await getChromium();
 
   const cardId = uuid();
-  const templatePath = path.join(rootPath, "templates", "userCard.hbs");
+  const templatePath = path.resolve(rootPath, "templates", "userCard.hbs");
   const templateSource = fs.readFileSync(templatePath, "utf8");
   const template = handlebars.compile(templateSource);
 
-  const cssPath = path.join(rootPath, "templates", "userCard.css");
+  const cssPath = path.resolve(rootPath, "templates", "userCard.css");
   const css = fs.readFileSync(cssPath, "utf8");
 
   const html = `
@@ -37,10 +38,10 @@ async function renderImage(data) {
   const page = await browser.newPage();
   await page.setContent(html, {waitUntil: "networkidle"});
 
-  const element = await page.locator(".user-card");
+  const element = page.locator(".user-card");
   if (await element.count() > 0) {
     await element.screenshot({
-      path: path.join(rootPath, "templates", `userCard-${cardId}.jpg`),
+      path: path.resolve(rootPath, "templates", `userCard-${cardId}.jpg`),
       type: "jpeg",
     });
   }
@@ -48,5 +49,3 @@ async function renderImage(data) {
   await browser.close();
   return cardId;
 }
-
-module.exports = {renderImage};
