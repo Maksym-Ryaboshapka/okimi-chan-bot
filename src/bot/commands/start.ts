@@ -2,7 +2,7 @@ import TelegramBot, {Message} from "node-telegram-bot-api";
 
 export default async function onStart(bot: TelegramBot, msg: Message): Promise<void> {
   const startMsg = `
-🎮 *Добро пожаловать в osu! Stats Bot!*
+🎮 *Добро пожаловать в Okimi-Chan*
 
 Этот бот получает статистику игроков из *osu! API* и создаёт красивую визуализацию их профиля в виде картинки.
 

@@ -10,14 +10,10 @@ if (!config.BOT_TOKEN) {
 const bot = new TelegramBot(config.BOT_TOKEN);
 export default bot;
 
-bot.onText(/\/start/, (msg) => {
-  (async () => {
-    await onStart(bot, msg);
-  })();
+bot.onText(/\/start/, async (msg) => {
+  await onStart(bot, msg);
 });
 
-bot.onText(/\/user(?: (.+))?/, (msg, match) => {
-  (async () => {
-    await onUser(bot, msg, match);
-  })();
+bot.onText(/\/user(?: (.+))?/, async (msg, match) => {
+  await onUser(bot, msg, match);
 });
