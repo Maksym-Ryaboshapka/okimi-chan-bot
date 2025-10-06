@@ -1,14 +1,14 @@
 import fs from "fs";
 import path from "path";
 import {v4 as uuid} from "uuid";
-// import getChromium from "./getChromium";
+import getChromium from "./getChromium";
 import * as handlebars from "handlebars";
 import {chromium} from "playwright";
 import type ClearUser from "../types/ClearUser.types";
 
 export default async function renderImage(data: ClearUser): Promise<string> {
   const rootPath = path.resolve(__dirname, "..");
-  // const chromiumPath = await getChromium();
+  const chromiumPath = await getChromium();
 
   const cardId = uuid();
   const templatePath = path.resolve(rootPath, "templates", "userCard.hbs");
@@ -31,7 +31,7 @@ export default async function renderImage(data: ClearUser): Promise<string> {
   `;
 
   const browser = await chromium.launch({
-    // executablePath: chromiumPath,
+    executablePath: chromiumPath,
     headless: true,
     args: [
       "--disable-gpu",

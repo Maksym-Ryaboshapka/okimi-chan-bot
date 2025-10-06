@@ -14,6 +14,8 @@ export default async function onUser(bot: TelegramBot, msg: Message, match: RegE
     return;
   }
 
+  const sent = await bot.sendMessage(msg.chat.id, "⌛️");
+
   const user = await getUser(username);
 
   if (!user) {
@@ -66,5 +68,6 @@ export default async function onUser(bot: TelegramBot, msg: Message, match: RegE
   const cardPath = path.resolve(rootPath, "templates", `userCard-${cardId}.jpg`);
 
   await bot.sendPhoto(msg.chat.id, cardPath);
+  await bot.deleteMessage(msg.chat.id, sent.message_id);
   fs.rmSync(cardPath);
 }
