@@ -20,6 +20,8 @@ export default async function onUser(bot: TelegramBot, msg: Message, match: RegE
 
   if (!user) {
     await bot.sendMessage(msg.chat.id, `Пользователь ${username} не найден`);
+    await bot.deleteMessage(msg.chat.id, sent.message_id);
+
     return;
   }
 
