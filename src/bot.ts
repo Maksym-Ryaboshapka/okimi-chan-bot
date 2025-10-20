@@ -1,5 +1,6 @@
 import TelegramBot from "node-telegram-bot-api";
 import config from "./config/index";
+
 import onStart from "./bot/commands/start";
 import onUser from "./bot/commands/user";
 

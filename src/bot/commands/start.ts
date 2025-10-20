@@ -1,4 +1,5 @@
-import TelegramBot, {Message} from "node-telegram-bot-api";
+import TelegramBot from "node-telegram-bot-api";
+import type {Message} from "node-telegram-bot-api";
 
 export default async function onStart(bot: TelegramBot, msg: Message): Promise<void> {
   const startMsg = `

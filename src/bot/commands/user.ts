@@ -63,13 +63,36 @@ export default async function onUser(bot: TelegramBot, msg: Message, match: RegE
     points,
     pfp
   };
-  
+
   const cardId = await renderImage(data);
 
   const rootPath = path.resolve(__dirname, "..", "..");
   const cardPath = path.resolve(rootPath, "templates", `userCard-${cardId}.jpg`);
 
-  await bot.sendPhoto(msg.chat.id, cardPath);
+  const achievements = user.user_achievements;
+  const playcount = user.statistics.play_count
+  const rankedPoints = (user.statistics.ranked_score / 1000000).toFixed(1);
+
+  const caption = `
+[osutrack](https://ameobea.me/osutrack/user/${usernameApi})
+[osuskills](https://osuskills.com/user/${usernameApi})
+*Достижения*: ${achievements.length}
+*Плейкаунт*: ${playcount}
+*Рейтинговых очков*: ${rankedPoints}m
+`
+
+  await bot.sendPhoto(msg.chat.id, cardPath, {
+    reply_to_message_id: msg.message_id,
+    caption,
+    parse_mode: "Markdown",
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {text: "Профиль пользователя", url: `https://osu.ppy.sh/users/${usernameApi}`}
+        ]
+      ]
+    }
+  });
   await bot.deleteMessage(msg.chat.id, sent.message_id);
   fs.rmSync(cardPath);
 }
