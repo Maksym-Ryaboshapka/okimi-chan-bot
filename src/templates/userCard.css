@@ -1,38 +1,30 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 680px;
   height: 340px;
   overflow: hidden;
+  background-color: #222222;
 }
 
 .user-card {
   width: 680px;
   height: 340px;
   margin: 0;
-  padding: 20px;
   box-sizing: border-box;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: #111 url("https://github.com/Maksym-Ryaboshapka/okimi-chan-bot/blob/dev/assets/bg.png?raw=true") repeat;
+  border: solid 6px #222222;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background-color: #222222;
   color: #fff;
   font-family: sans-serif;
   overflow: hidden;
-}
-
-.user-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  pointer-events: none;
-  z-index: 1;
 }
 
 .user-card > * {
@@ -40,9 +32,38 @@ html, body {
   z-index: 2;
 }
 
+.user-container {
+  width: 668px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #111
+    url("https://github.com/Maksym-Ryaboshapka/okimi-chan-bot/blob/dev/assets/bg.png?raw=true")
+    repeat;
+  border-radius: 20px;
+}
+
+.user-bg {
+  width: 626px;
+  height: auto;
+  position: relative;
+  padding: 20px 10px 20px 30px;
+  background: rgba(0, 0, 0, 0.5);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 23.8px;
+  border-bottom-right-radius: 23.3px;
+  border-bottom-left-radius: 20px;
+  border: solid #fff 1px;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .header {
   display: flex;
   gap: 15px;
+  margin: 0 0 50px 0;
+  z-index: 3;
 }
 
 .pfp {
@@ -65,13 +86,25 @@ html, body {
 }
 
 .levelsRating {
+  position: absolute;
+  top: 5px;
+  right: 35px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
   gap: 10px;
   margin: 15px 0;
+  width: 270px;
+  z-index: 3;
 }
 
 .level-box {
-  padding: 5px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px 0 0 0;
+  width: 80px;
+  height: 30px;
   border-radius: 10px;
   font-weight: bold;
 }
@@ -81,18 +114,29 @@ html, body {
   color: #000;
 }
 
-.level-box.s {
-  background-color: #3ec1f2;
-  color: #000;
+.level-box.s1 {
+  background-color: #30a4b4;
+  color: rgb(255, 255, 107);
 }
 
-.level-box.ss {
+.level-box.s2 {
+  background-color: #02bad3;
+  color: rgb(233, 233, 233);
+}
+
+.level-box.ss1 {
+  background-color: #b22cb2;
+  color: rgb(255, 255, 107);
+}
+
+.level-box.ss2 {
   background-color: #d84fd8;
-  color: #fff;
+  color: rgb(233, 233, 233);
 }
 
 .level-progress {
-  margin: 10px 0;
+  margin: 10px 5px;
+  z-index: 3;
 }
 
 .progress-bar {
@@ -113,26 +157,52 @@ html, body {
 
 .bottomBox {
   display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
+  justify-content: center;
+  gap: 10%;
+  width: 100%;
+  padding-bottom: 20px;
   font-size: 14px;
+  font-weight: 600;
   flex-direction: row;
+  background-color: #222222;
+}
+
+.bottomBox p:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  width: 1px;
+  height: 45px;
+  background-color: #4f4f4f;
+}
+
+.bottomBox p:nth-child(1)::after {
+  left: 140px;
+}
+
+.bottomBox p:nth-child(2)::after {
+  left: 305px;
+}
+
+.bottomBox p:nth-child(3)::after {
+  left: 490px;
 }
 
 .statTitle {
+  padding: 5px 10px;
+  margin: 0 0 10px 0;
   background-color: #4f4f4f;
-  padding: 5px;
   border-radius: 5px;
+  border-right: solid 1px #fff;
 }
 
 .bottomBox p {
   display: flex;
-  gap: 2px;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
 
   font-size: 17px;
 }
-
 
 .worldRank {
   font-size: 24px;
@@ -147,12 +217,4 @@ html, body {
 #country {
   font-size: 16px;
   margin-bottom: 10px;
-}
-
-.bottomBox {
-  width: 100%;
-  margin-left: -20px;
-  margin-right: -20px;
-  margin-bottom: -20px;
-  padding: 10px 20px;
 }

@@ -4,7 +4,7 @@ import {v4 as uuid} from "uuid";
 import getChromium from "./getChromium";
 import * as handlebars from "handlebars";
 import {chromium} from "playwright";
-import type ClearUser from "../types/ClearUser.types";
+import type { ClearUser } from "../types/ClearUser.types";
 
 export default async function renderImage(data: ClearUser): Promise<string> {
   const rootPath = path.resolve(__dirname, "..");
@@ -19,10 +19,31 @@ export default async function renderImage(data: ClearUser): Promise<string> {
   const css = fs.readFileSync(cssPath, "utf8");
 
   const html = `
+    <!DOCTYPE html>
     <html lang="en">
       <head>
         <meta charset="utf-8">
-        <style>${css}</style>
+        <style>
+          ${css}
+          
+          /* Додаткові стилі для покращення рендерингу */
+          body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+          }
+          
+          .user-card {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+          }
+          
+          img {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+          }
+        </style>
       </head>
       <body>
         ${template(data)}
@@ -32,7 +53,7 @@ export default async function renderImage(data: ClearUser): Promise<string> {
 
   const browser = await chromium.launch({
     executablePath: chromiumPath,
-    headless: true,
+    headless: true, // Змінити на true для продуктивності
     args: [
       "--disable-gpu",
       "--disable-extensions",
@@ -51,20 +72,52 @@ export default async function renderImage(data: ClearUser): Promise<string> {
       "--disable-dev-shm-usage",
       "--no-zygote",
       "--single-process",
+      "--font-render-hinting=none", // Покращує рендеринг шрифтів
+      "--disable-font-subpixel-positioning",
     ],
   });
 
-  const page = await browser.newPage();
-  await page.setContent(html, {waitUntil: "networkidle"});
-
-  const element = page.locator(".user-card");
-  if (await element.count() > 0) {
-    await element.screenshot({
-      path: path.resolve(rootPath, "templates", `userCard-${cardId}.jpg`),
-      type: "jpeg",
+  try {
+    const context = await browser.newContext({
+      viewport: { width: 680, height: 340 },
+      deviceScaleFactor: 2, // Збільшує роздільну здатність для кращої якості
     });
-  }
 
-  await browser.close();
-  return cardId;
+    const page = await context.newPage();
+    
+    // Очікування завантаження шрифтів та зображень
+    await page.setContent(html, { 
+      waitUntil: "networkidle",
+      timeout: 10000 
+    });
+
+    // Додаткове очікування для стабілізації рендерингу
+    await page.waitForTimeout(500);
+
+    // Переконатися, що зображення завантажилось
+    await page.waitForSelector('.pfp', { timeout: 5000 });
+
+    const element = await page.$('.user-card');
+    if (element) {
+      const screenshotPath = path.resolve(rootPath, "templates", `userCard-${cardId}.jpg`);
+      
+      await element.screenshot({
+        path: screenshotPath,
+        type: "jpeg",
+        quality: 95,
+        scale: "device",
+      });
+
+      console.log(`Screenshot saved: ${screenshotPath}`);
+    } else {
+      throw new Error("Element .user-card not found");
+    }
+
+    return cardId;
+  } catch (error) {
+    console.error("Error during screenshot:", error);
+    throw error;
+  } finally {
+    await browser.close();
+  }
 }

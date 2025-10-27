@@ -1,10 +1,10 @@
 import TelegramBot from "node-telegram-bot-api";
-import type {Message} from "node-telegram-bot-api";
+import type { Message } from "node-telegram-bot-api";
 import fs from "fs";
 import path from "path";
 import getUser from "../../services/osu/getUser";
 import renderImage from "../../utils/renderImage";
-import type ClearUser from "../../types/ClearUser.types";
+import type { ClearUser } from "../../types/ClearUser.types";
 
 export default async function onUser(bot: TelegramBot, msg: Message, match: RegExpExecArray | null): Promise<void | undefined> {
   const username = match && match[1] ? match[1].trim() : null;
@@ -27,8 +27,8 @@ export default async function onUser(bot: TelegramBot, msg: Message, match: RegE
 
   const usernameApi = user.username;
   const country = user.country.name;
-  const worldTop = user.statistics.global_rank;
-  const countryTop = user.statistics.country_rank;
+  const worldTop = user.statistics.global_rank ? `#${user.statistics.global_rank}` : "-";
+  const countryTop = user.statistics.country_rank ? `#${user.statistics.country_rank}` : "-";
 
   const a = user.statistics.grade_counts.a;
   const silverS = user.statistics.grade_counts.s;

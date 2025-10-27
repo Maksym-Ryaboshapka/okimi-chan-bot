@@ -1,8 +1,8 @@
-interface ClearUserTypes {
+export interface ClearUser {
   username: string,
   country: string,
-  worldTop: number | null,
-  countryTop: number | null,
+  worldTop: string | null,
+  countryTop: string | null,
 
   a: number,
   goldenS: number,
@@ -19,5 +19,3 @@ interface ClearUserTypes {
 
   pfp: string
 }
-
-export default ClearUserTypes;
