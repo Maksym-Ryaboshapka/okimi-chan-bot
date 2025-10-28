@@ -43,6 +43,8 @@ export async function closeBrowser(): Promise<void> {
 }
 
 export default async function renderImage(data: ClearUser): Promise<string> {
+  const SCALE = 3;
+
   const rootPath = path.resolve(__dirname, "..", "..");
   const cardId = uuid();
   const templatePath = path.resolve(rootPath, "templates", "userCard.hbs");
@@ -63,6 +65,10 @@ export default async function renderImage(data: ClearUser): Promise<string> {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             image-rendering: crisp-edges;
+            transform: scale(${ SCALE });
+            transform-origin: top left;
+            width: ${ 680 }px;
+            height: ${ 340 }px;
           }
           
           .user-card {
@@ -83,7 +89,8 @@ export default async function renderImage(data: ClearUser): Promise<string> {
 
   const browser = await getBrowser();
   const context = await browser.newContext({
-    viewport: { width: 680, height: 340 },
+    viewport: { width: 680 * SCALE, height: 340 * SCALE },
+    deviceScaleFactor: SCALE
   });
 
   try {

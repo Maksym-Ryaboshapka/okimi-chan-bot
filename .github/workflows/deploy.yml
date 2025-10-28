@@ -1,0 +1,46 @@
+name: Deploy to Home Server
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Start ssh-agent and add key
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Ensure server known_host entry
+        run: |
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts || true
+
+      - name: Pull, build and restart on server
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          PROJECT_DIR: /home/${{ secrets.SSH_USER }}/okimi-chan
+        run: |
+          ssh -o StrictHostKeyChecking=yes ${SSH_USER}@${SSH_HOST} <<'EOF' || exit 1
+            set -e
+
+            mkdir -p "${PROJECT_DIR}"
+            cd "${PROJECT_DIR}"
+            if [ -d .git ]; then
+              git fetch --all
+              git reset --hard origin/master
+            else
+              git clone --depth=1 "https://github.com/${GITHUB_REPOSITORY}.git" "${PROJECT_DIR}"
+            fi
+
+            docker --version
+            docker compose pull || true
+            docker compose build --no-cache
+            docker compose up -d --force-recreate
+            docker image prune -f
+          EOF
