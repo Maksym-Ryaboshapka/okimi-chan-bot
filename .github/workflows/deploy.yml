@@ -24,7 +24,7 @@ jobs:
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
-          PROJECT_DIR: /home/${{ secrets.SSH_USER }}/okimi-chan
+          PROJECT_DIR: /home/server/okimi-chan
         run: |
           ssh -p 2222 -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} <<'EOF' || exit 1
             set -e
