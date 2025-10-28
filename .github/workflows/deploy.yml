@@ -26,16 +26,19 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           PROJECT_DIR: /home/server/okimi-chan
         run: |
-          ssh -p 2222 -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} <<'EOF' || exit 1
+          ssh -p 2222 -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} bash -s -- "${PROJECT_DIR}" "${GITHUB_REPOSITORY}" <<'REMOTE_SCRIPT'
             set -e
+            PROJECT_DIR="$1"
+            GITHUB_REPOSITORY="$2"
 
             mkdir -p "${PROJECT_DIR}"
             cd "${PROJECT_DIR}"
+
             if [ -d .git ]; then
               git fetch --all
               git reset --hard origin/master
             else
-              git clone --depth=1 "https://github.com/${GITHUB_REPOSITORY}.git" "${PROJECT_DIR}"
+              git clone --depth=1 "https://github.com/${GITHUB_REPOSITORY}.git" .
             fi
 
             docker --version
@@ -43,4 +46,4 @@ jobs:
             docker compose build --no-cache
             docker compose up -d --force-recreate
             docker image prune -f
-          EOF
+          REMOTE_SCRIPT
