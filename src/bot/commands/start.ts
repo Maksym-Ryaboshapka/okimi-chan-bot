@@ -1,5 +1,5 @@
 import TelegramBot from "node-telegram-bot-api";
-import type {Message} from "node-telegram-bot-api";
+import type { Message } from "node-telegram-bot-api";
 
 export default async function onStart(bot: TelegramBot, msg: Message): Promise<void> {
   const startMsg = `
@@ -19,5 +19,5 @@ export default async function onStart(bot: TelegramBot, msg: Message): Promise<v
 _Приятного использования!_ 🚀
 `;
 
-  await bot.sendMessage(msg.chat.id, startMsg, {parse_mode: "Markdown"});
+  bot.sendMessage(msg.chat.id, startMsg, {parse_mode: "Markdown"});
 }

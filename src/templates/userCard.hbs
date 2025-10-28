@@ -1,34 +1,42 @@
 <div class="user-card">
-  <div class="header">
-    <img class="pfp" src="{{pfp}}" alt="Avatar">
-    <div class="user-info">
-      <h2>{{username}}</h2>
-      <p class="country" id="country">{{country}}</p>
-      <p class="worldRank">#{{worldTop}}</p>
-      <p class="countryRank">#{{countryTop}}</p>
-    </div>
-  </div>
+  <div class="user-container">
+    <div class="user-bg">
+      <div class="header">
+        <img class="pfp" src="{{pfp}}" alt="Avatar" />
+        <div class="user-info">
+          <h2>{{username}}</h2>
+          <p class="country" id="country">{{country}}</p>
+          <p class="worldRank">{{worldTop}}</p>
+          <p class="countryRank">{{countryTop}}</p>
+        </div>
+      </div>
 
-  <div class="levelsRating">
-    <div class="level-box a">A: {{a}}</div>
-    <div class="level-box s yellow" style="color: rgb(255, 255, 107);">S: {{goldenS}}</div>
-    <div class="level-box s">S: {{silverS}}</div>
-    <div class="level-box ss yellow" style="color: rgb(255, 255, 119);">SS: {{goldenSS}}</div>
-    <div class="level-box ss">SS: {{silverSS}}</div>
-  </div>
+      <div class="levelsRating">
+        <div class="level-box a">A: {{a}}</div>
+        <div class="level-box s1">S: {{silverS}}</div>
+        <div class="level-box s2">S: {{goldenS}}</div>
+        <div class="level-box ss1">SS: {{silverSS}}</div>
+        <div class="level-box ss2">SS: {{goldenSS}}</div>
+      </div>
 
-  <div class="level-progress">
-    <span>Level {{level}}</span>
-    <div class="progress-bar">
-      <div class="progress" style="width: {{levelProgress}}%;"></div>
+      <div class="level-progress">
+        <span>Level {{level}}</span>
+        <div class="progress-bar">
+          <div class="progress" style="width: {{levelProgress}}%;"></div>
+        </div>
+        <span>{{levelProgress}}%</span>
+      </div>
     </div>
-    <span>{{levelProgress}}%</span>
   </div>
 
   <div class="bottomBox">
-    <p><span class="statTitle">pp</span>{{pp}}</p>
-    <p><span class="statTitle">Accuracy</span>{{accuracy}}%</p>
-    <p><span class="statTitle">Time Played</span>{{timePlayed}}h</p>
-    <p><span class="statTitle">Points</span>{{points}}m</p>
+    <p class="statBox pp"><span class="statTitle">pp</span>{{pp}}</p>
+    <p class="statBox accuracy"><span
+        class="statTitle"
+      >Accuracy</span>{{accuracy}}%</p>
+    <p class="statBox tp"><span class="statTitle">Time Played</span>{{timePlayed}}h</p>
+    <p class="statBox points"><span
+        class="statTitle"
+      >Points</span>{{points}}m</p>
   </div>
 </div>
