@@ -18,19 +18,22 @@ jobs:
 
       - name: Ensure server known_host entry
         run: |
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts || true
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 2222 -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts || true
 
       - name: Pull, build and restart on server
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
           PROJECT_DIR: /home/${{ secrets.SSH_USER }}/okimi-chan
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           ssh -p 2222 -o StrictHostKeyChecking=yes ${SSH_USER}@${SSH_HOST} <<'EOF' || exit 1
             set -e
 
             mkdir -p "${PROJECT_DIR}"
             cd "${PROJECT_DIR}"
+
             if [ -d .git ]; then
               git fetch --all
               git reset --hard origin/master
