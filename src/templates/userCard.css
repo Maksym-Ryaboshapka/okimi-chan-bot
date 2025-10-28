@@ -19,8 +19,8 @@ body {
   right: 0;
   bottom: 0;
   border: solid 6px #222222;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  /*border-top-left-radius: 20px;*/
+  /*border-top-right-radius: 20px;*/
   background-color: #222222;
   color: #fff;
   font-family: sans-serif;
@@ -50,11 +50,8 @@ body {
   position: relative;
   padding: 20px 10px 20px 30px;
   background: rgba(0, 0, 0, 0.5);
-  border-top-left-radius: 20px;
-  border-top-right-radius: 23.8px;
-  border-bottom-right-radius: 23.3px;
-  border-bottom-left-radius: 20px;
-  border: solid #fff 1px;
+  border-radius: 20px;
+  border: solid #222 1px;
   pointer-events: none;
   z-index: 1;
 }
@@ -71,6 +68,7 @@ body {
   height: 120px;
   border-radius: 15px;
   object-fit: cover;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 .user-info h2 {
@@ -107,6 +105,7 @@ body {
   height: 30px;
   border-radius: 10px;
   font-weight: bold;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 
 .level-box.a {
@@ -147,12 +146,14 @@ body {
   border-radius: 6px;
   overflow: hidden;
   margin-top: 5px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .progress {
   height: 100%;
   background: #7ed957;
   border-radius: 6px 0 0 6px;
+  box-shadow: 0 0 10px rgba(126, 217, 87, 0.5);
 }
 
 .bottomBox {
@@ -170,9 +171,10 @@ body {
 .bottomBox p:not(:last-child)::after {
   content: "";
   position: absolute;
-  width: 1px;
+  width: 3px;
   height: 45px;
   background-color: #4f4f4f;
+  border-radius: 4px;
 }
 
 .bottomBox p:nth-child(1)::after {
@@ -192,7 +194,7 @@ body {
   margin: 0 0 10px 0;
   background-color: #4f4f4f;
   border-radius: 5px;
-  border-right: solid 1px #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .bottomBox p {
