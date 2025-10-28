@@ -26,7 +26,7 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           PROJECT_DIR: /home/${{ secrets.SSH_USER }}/okimi-chan
         run: |
-          ssh -o StrictHostKeyChecking=yes ${SSH_USER}@${SSH_HOST} <<'EOF' || exit 1
+          ssh -p 2222 -o StrictHostKeyChecking=yes ${SSH_USER}@${SSH_HOST} <<'EOF' || exit 1
             set -e
 
             mkdir -p "${PROJECT_DIR}"
