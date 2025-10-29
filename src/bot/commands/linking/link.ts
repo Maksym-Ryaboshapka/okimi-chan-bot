@@ -55,6 +55,7 @@ export default async function onLink(bot: TelegramBot, msg: Message) {
     );
 
     bot.off("message", osuNickHandler);
+    await bot.deleteMessage(question.chat.id, question.message_id);
   }
 
   bot.on("message", osuNickHandler);
