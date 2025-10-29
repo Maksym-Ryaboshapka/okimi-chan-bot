@@ -16,12 +16,12 @@ export default async function onMe(bot: TelegramBot, msg: Message) {
   const candidate = await Link.findOne({ tgName });
 
   if (!candidate) {
-    return await bot.sendMessage(msg.chat.id, `${ tgName } не имеет привязанного osu! аккаунта`);
+    return await bot.sendMessage(msg.chat.id, `Аккаунт @${ tgName } не привязан к osu! профилю. Воспользуйтесь командой /link.`);
   }
 
   const osuName = candidate.osuName;
 
-  const sent = await bot.sendMessage(msg.chat.id, "⌛️");
+  const sent = await bot.sendMessage(msg.chat.id, "⏳");
 
   const user = await getUser(osuName);
 
