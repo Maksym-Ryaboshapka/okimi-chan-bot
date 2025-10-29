@@ -1,10 +1,9 @@
 import TelegramBot from "node-telegram-bot-api";
 import type { Message } from "node-telegram-bot-api";
-import fs from "fs";
-import path from "path";
 import getUser from "../../services/osu/getUser";
 import renderImage from "../../services/render/renderImage.ts";
-import type { ClearUser } from "../../types/ClearUser.types";
+import createData from "../../services/render/createData.ts";
+import sendPhoto from "../sendPhoto.ts";
 
 export default async function onUser(bot: TelegramBot, msg: Message, match: RegExpExecArray | null): Promise<void | undefined> {
   const username = match && match[1] ? match[1].trim() : null;
@@ -19,82 +18,15 @@ export default async function onUser(bot: TelegramBot, msg: Message, match: RegE
   const user = await getUser(username);
 
   if (!user) {
-    await bot.sendMessage(msg.chat.id, `Пользователь ${ username } не найден`);
+    await bot.sendMessage(msg.chat.id, `Пользователь *${ username }* не найден`, { parse_mode: "Markdown" });
     await bot.deleteMessage(msg.chat.id, sent.message_id);
 
     return;
   }
 
-  const usernameApi = user.username;
-  const country = user.country.name;
-  const worldTop = user.statistics.global_rank ? `#${ user.statistics.global_rank }` : "-";
-  const countryTop = user.statistics.country_rank ? `#${ user.statistics.country_rank }` : "-";
-
-  const a = user.statistics.grade_counts.a;
-  const silverS = user.statistics.grade_counts.s;
-  const goldenS = user.statistics.grade_counts.sh;
-  const silverSS = user.statistics.grade_counts.ss;
-  const goldenSS = user.statistics.grade_counts.ssh;
-  const level = user.statistics.level.current;
-  const levelProgress = user.statistics.level.progress;
-
-  const pp = Math.floor(user.statistics.pp);
-  const accuracy = user.statistics.hit_accuracy.toFixed(2);
-  const timePlayed = Math.floor(user.statistics.play_time / (60 * 60));
-  const points = (user.statistics.total_score / 1000000).toFixed(1);
-
-  const pfp = user.avatar_url;
-
-  const data: ClearUser = {
-    username: usernameApi,
-    country,
-    worldTop,
-    countryTop,
-    a,
-    silverS,
-    goldenS,
-    silverSS,
-    goldenSS,
-    level,
-    levelProgress,
-    pp,
-    accuracy,
-    timePlayed,
-    points,
-    pfp
-  };
+  const data = createData(user);
 
   const cardId = await renderImage(data);
 
-  const rootPath = path.resolve(__dirname, "..", "..");
-  const cardPath = path.resolve(rootPath, "templates", `userCard-${ cardId }.jpg`);
-
-  const achievements = user.user_achievements;
-  const playcount = user.statistics.play_count
-  const rankedPoints = (user.statistics.ranked_score / 1000000).toFixed(1);
-
-  const caption = `
-[osutrack](https://ameobea.me/osutrack/user/${ usernameApi })
-[osuskills](https://osuskills.com/user/${ usernameApi })
-*Достижения*: ${ achievements.length }
-*Плейкаунт*: ${ playcount }
-*Рейтинговых очков*: ${ rankedPoints }m
-`
-
-  await bot.sendPhoto(msg.chat.id, fs.createReadStream(cardPath), {
-    reply_to_message_id: msg.message_id,
-    caption,
-    parse_mode: "Markdown",
-    reply_markup: {
-      inline_keyboard: [
-        [
-          { text: "Профиль пользователя", url: `https://osu.ppy.sh/users/${ usernameApi }` }
-        ]
-      ]
-    }
-  });
-
-  bot.deleteMessage(msg.chat.id, sent.message_id);
-  fs.rm(cardPath, () => {
-  });
+  await sendPhoto({ bot, msg, sent, data, user, cardId });
 }
