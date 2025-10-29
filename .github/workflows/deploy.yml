@@ -43,6 +43,8 @@ jobs:
 
             docker --version
 
+            docker compose down --volumes --remove-orphans || true
+
             ORPHANS=$(docker ps -aq -f name=okimi-chan || true)
             if [ -n "$ORPHANS" ]; then
               docker rm -f $ORPHANS || true
@@ -52,4 +54,7 @@ jobs:
             docker compose build --no-cache
             docker compose up -d --force-recreate
             docker image prune -f
+          
+            cd /home/server/okimi-chan-db
+            docker compose up -d --build
           REMOTE_SCRIPT
