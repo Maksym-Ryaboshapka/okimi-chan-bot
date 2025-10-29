@@ -1,4 +1,5 @@
 export enum Queries {
+  Null = "null",
   Unlink = "unlink",
-  Cancel = "cancel"
+  LinkCancel = "link_cancel"
 }

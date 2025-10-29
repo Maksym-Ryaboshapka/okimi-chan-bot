@@ -24,5 +24,5 @@ export default async function unlinkHandler(bot: TelegramBot, query: CallbackQue
     return;
   }
 
-  await bot.sendMessage(query.message.chat.id, `Ваш аккаунт успешно отвязан от *${ osuName }*`);
+  await bot.sendMessage(query.message.chat.id, `**Привязка успешно удалена.** Ваш Telegram-аккаунт больше не связан с профилем *${ osuName }*.`, { parse_mode: "Markdown" });
 }
