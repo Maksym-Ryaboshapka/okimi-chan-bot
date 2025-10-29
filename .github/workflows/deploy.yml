@@ -7,6 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,17 +42,33 @@ jobs:
               git clone --depth=1 "https://github.com/${GITHUB_REPOSITORY}.git" .
             fi
 
+            echo "📦 Checking Docker setup..."
             docker --version
 
-            docker compose down --volumes --remove-orphans || true
+            echo "🧹 Stopping old containers..."
+            docker compose down --remove-orphans || true
 
+            echo "🧰 Cleaning unused containers..."
             ORPHANS=$(docker ps -aq -f name=okimi-chan || true)
             if [ -n "$ORPHANS" ]; then
               docker rm -f $ORPHANS || true
             fi
 
+            echo "⬇️ Pulling latest images..."
             docker compose pull || true
-            docker compose build --no-cache
-            docker compose up -d --force-recreate
+
+            echo "🏗️ Building app..."
+            docker compose build
+
+            echo "🚀 Starting containers..."
+            docker compose up -d
+
+            echo "🕓 Waiting for MongoDB to initialize..."
+            sleep 10
+
+            echo "🧩 Checking container statuses:"
+            docker compose ps
+
+            echo "🧹 Cleaning unused images..."
             docker image prune -f
           REMOTE_SCRIPT
