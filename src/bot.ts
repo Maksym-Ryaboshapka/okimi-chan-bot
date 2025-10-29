@@ -21,7 +21,7 @@ bot.onText(/\/help/, async (msg) => await onHelp(bot, msg));
 
 bot.onText(/\/user(?: (.+))?/, async (msg, match) => await onUser(bot, msg, match));
 
-bot.onText(/\/link/, async (msg) => await onLink(bot, msg));
+bot.onText(/\/link(?: (.+))?/, async (msg, match) => await onLink(bot, msg, match));
 bot.onText(/\/unlink/, async (msg) => await onUnlink(bot, msg));
 
 bot.onText(/\/me/, async (msg) => await onMe(bot, msg));
