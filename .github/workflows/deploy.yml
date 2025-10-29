@@ -43,8 +43,6 @@ jobs:
 
             docker --version
 
-#            docker compose down --volumes --remove-orphans || true
-
             ORPHANS=$(docker ps -aq -f name=okimi-chan || true)
             if [ -n "$ORPHANS" ]; then
               docker rm -f $ORPHANS || true
