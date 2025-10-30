@@ -2,6 +2,7 @@ import TelegramBot from "node-telegram-bot-api";
 import type { Message } from "node-telegram-bot-api";
 import Link from "../../../db/models/Link.ts";
 import getUser from "../../../services/osu/getUser.ts";
+import log from "../../../services/logs/logger.ts";
 
 export default async function onLink(bot: TelegramBot, msg: Message, match: RegExpExecArray | null) {
   const tgName = msg.from?.username;
@@ -26,4 +27,6 @@ export default async function onLink(bot: TelegramBot, msg: Message, match: RegE
       msg.chat.id,
       `Аккаунт @${ tgName } успешно привязан к *${ user.username }*. Профиль доступен по команде /me.`, { parse_mode: "Markdown" }
   );
+
+  log("INFO", `${ tgName } linked his account to ${ user.username }`);
 }

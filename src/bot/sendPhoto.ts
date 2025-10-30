@@ -3,6 +3,7 @@ import fs from "fs";
 import TelegramBot, { type Message } from "node-telegram-bot-api";
 import type { ClearUser } from "../services/render/ClearUser.types.ts";
 import type { UserExtended } from "osu-web.js";
+import log from "../services/logs/logger.ts";
 
 export default async function sendPhoto({ bot, msg, sent, data, user, cardId }: {
   bot: TelegramBot;
@@ -12,8 +13,8 @@ export default async function sendPhoto({ bot, msg, sent, data, user, cardId }: 
   user: UserExtended;
   cardId: string;
 }) {
-  const rootPath = path.resolve(__dirname, "..");
-  const cardPath = path.resolve(rootPath, "templates", `userCard-${ cardId }.jpg`);
+  const rootPath = path.resolve(__dirname, "..", "..");
+  const cardPath = path.resolve(rootPath, "tmp", `userCard-${ cardId }.jpg`);
 
   const achievements = user.user_achievements;
   const playcount = user.statistics.play_count;
@@ -44,6 +45,10 @@ export default async function sendPhoto({ bot, msg, sent, data, user, cardId }: 
     bot.deleteMessage(msg.chat.id, sent.message_id);
   }
 
-  fs.rm(cardPath, () => {
+  fs.rm(cardPath, (err) => {
+    if (err) {
+      log("ERROR", `Failed to delete userCard-${ cardId }`);
+      throw new Error(`Failed to delete userCard-${ cardId }: `, err);
+    }
   });
 }

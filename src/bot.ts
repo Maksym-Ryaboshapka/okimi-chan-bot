@@ -1,5 +1,6 @@
 import TelegramBot from "node-telegram-bot-api";
 import config from "./config/index";
+import log from "./services/logs/logger.ts";
 
 import onStart from "./bot/commands/start";
 import onHelp from "./bot/commands/help.ts";
@@ -9,6 +10,7 @@ import onUnlink from "./bot/commands/linking/unlink.ts";
 import onMe from "./bot/commands/linking/me.ts";
 
 if (!config.BOT_TOKEN) {
+  log("ERROR", "Failed to launch the bot");
   throw new Error("Bot token not received yet");
 }
 
