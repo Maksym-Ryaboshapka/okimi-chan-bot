@@ -12,11 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run tests
-        run: |
-          echo "Running tests..."
-          echo "All tests passed ✅"
-
       - name: Deploy over SSH
         uses: appleboy/ssh-action@v1.2.0
         with:
@@ -25,6 +20,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/okimi-chan
+            docker compose down
             git pull
             docker compose pull
-            docker compose up -d
+            docker compose up -d --build
