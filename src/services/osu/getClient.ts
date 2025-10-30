@@ -2,6 +2,7 @@ import { Client } from "osu-web.js";
 import createToken from "./createToken";
 import config from "../../config";
 import { getToken, setToken } from "./getToken";
+import log from "../logs/logger.ts";
 
 export default async function getClient(): Promise<Client> {
   let token: string | null | undefined;
@@ -13,6 +14,7 @@ export default async function getClient(): Promise<Client> {
 
   if (!token) {
     if (!config.OSU_CLIENT_ID || !config.OSU_CLIENT_SECRET) {
+      log("ERROR", "Failed to create osu client");
       throw new Error("Missing osu! client credentials in config");
     }
 

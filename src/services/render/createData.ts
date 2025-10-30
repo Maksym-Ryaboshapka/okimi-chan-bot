@@ -1,5 +1,5 @@
 import type { UserExtended } from "osu-web.js";
-import type { ClearUser } from "../../types/ClearUser.types.ts";
+import type { ClearUser } from "./ClearUser.types.ts";
 
 export default function createData(user: UserExtended): ClearUser {
   const username = user.username;
