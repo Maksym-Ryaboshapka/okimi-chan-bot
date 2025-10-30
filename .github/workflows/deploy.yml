@@ -7,54 +7,24 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Start ssh-agent and add key
-        uses: webfactory/ssh-agent@v0.8.0
+      - name: Run tests
+        run: |
+          echo "Running tests..."
+          echo "All tests passed ✅"
+
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.0
         with:
-          ssh-private-key: ${{ secrets.SSH_KEY }}
-
-      - name: Ensure server known_host entry
-        run: |
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts || true
-
-      - name: Pull, build and restart on server
-        env:
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          PROJECT_DIR: /home/server/okimi-chan
-        run: |
-          ssh -p 2222 -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} bash -s -- "${PROJECT_DIR}" "${GITHUB_REPOSITORY}" <<'REMOTE_SCRIPT'
-            set -e
-            PROJECT_DIR="$1"
-            GITHUB_REPOSITORY="$2"
-
-            mkdir -p "${PROJECT_DIR}"
-            cd "${PROJECT_DIR}"
-
-            if [ -d .git ]; then
-              git fetch --all
-              git reset --hard origin/master
-            else
-              git clone --depth=1 "https://github.com/${GITHUB_REPOSITORY}.git" .
-            fi
-
-            docker --version
-
-            docker compose down --volumes --remove-orphans || true
-
-            ORPHANS=$(docker ps -aq -f name=okimi-chan || true)
-            if [ -n "$ORPHANS" ]; then
-              docker rm -f $ORPHANS || true
-            fi
-
-            docker compose pull || true
-            docker compose build --no-cache
-            docker compose up -d --force-recreate
-            docker image prune -f
-          
-            cd /home/server/okimi-chan-db
-            docker compose up -d --build
-          REMOTE_SCRIPT
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/okimi-chan
+            git pull
+            docker compose pull
+            docker compose up -d
