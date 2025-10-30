@@ -45,13 +45,25 @@ export async function closeBrowser(): Promise<void> {
 export default async function renderImage(data: ClearUser): Promise<string> {
   const SCALE = 3;
 
-  const rootPath = path.resolve(__dirname, "..", "..");
+  const rootPath = path.resolve(__dirname, "..", "..", "..");
+  const srcPath = path.resolve(__dirname, "..", "..");
   const cardId = uuid();
-  const templatePath = path.resolve(rootPath, "templates", "userCard.hbs");
+
+  const templatePath = path.resolve(srcPath, "templates", "userCard.hbs");
+  const cssPath = path.resolve(srcPath, "templates", "userCard.css");
+
   const templateSource = fs.readFileSync(templatePath, "utf8");
+
   const template = handlebars.compile(templateSource);
-  const cssPath = path.resolve(rootPath, "templates", "userCard.css");
   const css = fs.readFileSync(cssPath, "utf8");
+
+  if (!fs.existsSync(path.resolve(rootPath, "tmp"))) {
+    fs.mkdir(path.resolve(rootPath, "tmp"), (err) => {
+      if (err) {
+        throw new Error("Failed to create tmp:", err);
+      }
+    });
+  }
 
   const html = `
     <!DOCTYPE html>
@@ -101,11 +113,8 @@ export default async function renderImage(data: ClearUser): Promise<string> {
 
     const element = await page.$('.user-card');
     if (element) {
-      const screenshotPath = path.resolve(
-          rootPath,
-          "templates",
-          `userCard-${ cardId }.jpg`
-      );
+      const screenshotPath = path.resolve(rootPath, "tmp", `userCard-${ cardId }.jpg`);
+
       await element.screenshot({
         path: screenshotPath,
         type: "jpeg",
