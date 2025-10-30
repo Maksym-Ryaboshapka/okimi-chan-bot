@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 import TelegramBot, { type Message } from "node-telegram-bot-api";
-import type { ClearUser } from "../types/ClearUser.types.ts";
+import type { ClearUser } from "../services/render/ClearUser.types.ts";
 import type { UserExtended } from "osu-web.js";
 
 export default async function sendPhoto({ bot, msg, sent, data, user, cardId }: {

@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 import * as handlebars from "handlebars";
 import { chromium } from "playwright";
 import type { Browser } from "playwright";
-import type { ClearUser } from "../../types/ClearUser.types.ts";
+import type { ClearUser } from "./ClearUser.types.ts";
 
 let browserInstance: Browser | null = null;
 
