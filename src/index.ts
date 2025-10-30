@@ -5,11 +5,9 @@ import log from "./services/logs/logger.ts";
 
 connectDB().then(() => {
   console.log("DB connected");
-  log("INFO", "DB connected");
 });
 
 bot.startPolling().then(() => {
-  log("INFO", "Bot is running");
   console.log("Bot is running");
 });
 
