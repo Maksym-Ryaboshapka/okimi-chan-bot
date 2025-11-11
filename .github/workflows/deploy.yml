@@ -1,4 +1,4 @@
-name: Deploy to Home Server
+name: Deploy to Server
 
 on:
   push:
@@ -19,8 +19,4 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/okimi-chan
-            docker compose down
-            git pull
-            docker compose pull
-            docker compose up -d --build
+            cd ~/okimi-chan-bot

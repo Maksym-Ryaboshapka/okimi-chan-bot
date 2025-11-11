@@ -39,6 +39,9 @@ export default async function sendPhoto({ bot, msg, sent, data, user, cardId }: 
         ]
       ]
     }
+  }, {
+    filename: `userCard-${cardId}.jpg`,
+    contentType: "image/jpeg"
   });
 
   if (sent) {
