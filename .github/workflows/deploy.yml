@@ -20,3 +20,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/okimi-chan-bot
+            git pull
+            systemctl restart okimi-chan.service
