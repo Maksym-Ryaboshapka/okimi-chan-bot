@@ -2,7 +2,6 @@ import bot from "./bot";
 import connectDB from "./db";
 import { closeBrowser } from "./services/render/renderImage.ts";
 
-process.title = "okimi-chan";
 process.env.NTBA_FIX_350 = "true";
 
 connectDB().then(() => {
