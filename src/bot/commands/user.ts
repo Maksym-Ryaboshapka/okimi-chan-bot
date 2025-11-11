@@ -1,5 +1,4 @@
-import TelegramBot from "node-telegram-bot-api";
-import type { Message } from "node-telegram-bot-api";
+import TelegramBot, { type Message } from "node-telegram-bot-api";
 import getUser from "../../services/osu/getUser";
 import renderImage from "../../services/render/renderImage.ts";
 import createData from "../../services/render/createData.ts";
