@@ -1,16 +1,16 @@
 {
   "name": "okimi-chan-bot",
-  "module": "src/index.ts",
-  "type": "module",
+  "main": "src/index.ts",
+  "type": "commonjs",
   "private": false,
   "scripts": {
-    "start": "bun run src/index.ts",
-    "dev": "bun run --watch src/index.ts"
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest",
     "@types/node": "^24.6.2",
-    "@types/node-telegram-bot-api": "^0.64.11"
+    "@types/node-telegram-bot-api": "^0.64.11",
+    "tsx": "^4.20.6"
   },
   "peerDependencies": {
     "typescript": "^5"
@@ -23,6 +23,7 @@
     "node-telegram-bot-api": "^0.66.0",
     "osu-web.js": "^2.6.0",
     "playwright": "^1.55.1",
+    "telegraf": "^4.16.3",
     "uuid": "^13.0.0"
   }
 }
