@@ -14,4 +14,3 @@ bot.startPolling().then(() => {
 
 process.on("SIGINT", closeBrowser);
 process.on("SIGTERM", closeBrowser);
-process.on("SIGKILL", closeBrowser);

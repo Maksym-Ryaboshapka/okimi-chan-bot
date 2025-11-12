@@ -2,15 +2,10 @@ FROM mcr.microsoft.com/playwright:v1.55.1-noble
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y unzip curl && rm -rf /var/lib/apt/lists/*
+COPY package*.json ./
 
-RUN curl -fsSL https://bun.sh/install | bash && \
-    ln -s /root/.bun/bin/bun /usr/local/bin/bun
-
-COPY package*.json bun.lockb* ./
-
-RUN bun install
+RUN npm install
 
 COPY . .
 
-CMD ["bun", "run", "start"]
+CMD ["npm", "start"]

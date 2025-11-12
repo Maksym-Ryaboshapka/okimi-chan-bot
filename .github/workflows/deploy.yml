@@ -21,4 +21,5 @@ jobs:
           script: |
             cd ~/okimi-chan-bot
             git pull
+            npm install
             systemctl restart okimi-chan.service
