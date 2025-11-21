@@ -1,16 +1,11 @@
-import bot from "./bot";
-// import connectDB from "./db";
-import { closeBrowser } from "./services/render/renderImage.ts";
-
 process.env.NTBA_FIX_350 = "true";
 
-// connectDB().then(() => {
-//   console.log("DB connected");
-// });
+import bot from "./bot";
+import "./bot/inline/inline";
+import { closeBrowser } from "./services/render/renderImage";
 
-bot.startPolling().then(() => {
-  console.log("Bot is running");
-});
+bot.startPolling();
+console.log("✅ Bot running");
 
 process.on("SIGINT", closeBrowser);
 process.on("SIGTERM", closeBrowser);

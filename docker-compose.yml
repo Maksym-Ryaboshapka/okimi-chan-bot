@@ -6,5 +6,6 @@ services:
     restart: always
     environment:
       - NODE_ENV=production
+      - CACHE_CHAT_ID=-5069219296
     volumes:
       - ./logs:/app/logs

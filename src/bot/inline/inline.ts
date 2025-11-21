@@ -1,87 +1,74 @@
 import TelegramBot from "node-telegram-bot-api";
-import onStart from "../../bot/commands/start";
-import onHelp from "../../bot/commands/help";
-import onUser from "../../bot/commands/user";
-import onLink from "../../bot/commands/linking/link";
-import onUnlink from "../../bot/commands/linking/unlink";
-import onMe from "../../bot/commands/linking/me";
 import bot from "../../bot";
-
 import getUser from "../../services/osu/getUser";
-import renderImage from "../../services/render/renderImage.ts";
-import createData from "../../services/render/createData.ts";
+import createData from "../../services/render/createData";
+import renderImage from "../../services/render/renderImage";
+import path from "path";
+import fs from "fs";
 
-// const TOKEN = '8264275218:AAHvaLVcCNRBsbDN-LOf1ouIc7pVaNu3UaU';
-// const bot = new TelegramBot(TOKEN, { polling: true });
+const CACHE_CHAT_ID = process.env.CACHE_CHAT_ID || "-5069219296";
 
-// bot.onText(/\/start/, async (msg) => await onStart(bot, msg));
-// bot.onText(/\/help/, async (msg) => await onHelp(bot, msg));
-
-// bot.onText(/\/user(?: (.+))?/, async (msg, match) => await onUser(bot, msg, match));
-
-// bot.onText(/\/link(?: (.+))?/, async (msg, match) => await onLink(bot, msg, match));
-// bot.onText(/\/unlink/, async (msg) => await onUnlink(bot, msg));
-// bot.onText(/\/me/, async (msg) => await onMe(bot, msg));
-
-// Store counter for each inline message
-// const counters: Record<string, number> = {};
-bot.on("inline_query", async (query: TelegramBot.InlineQuery) => {
-  const username = query.query.trim(); // текст после @botname
+bot.on("inline_query", async (query) => {
+  const username = query.query.trim();
 
   if (!username) {
-    const results: TelegramBot.InlineQueryResultArticle[] = [
-      {
-        type: "article",
-        id: "1",
-        title: "Search user",
-        description: "Write a username to search for",
-        input_message_content: {
-          message_text: "Please provide a username after @botname",
-        },
-      },
-    ];
-
-    await bot.answerInlineQuery(query.id, results, { cache_time: 0 });
-    return;
+    return bot.answerInlineQuery(query.id, [{
+      type: "article",
+      id: "help",
+      title: "Поиск osu! игрока",
+      description: "Введи ник после @okimichanbot",
+      input_message_content: { message_text: "Введи ник osu! игрока после @okimichanbot" },
+    }]);
   }
 
-  // Получаем данные пользователя osu!
   const user = await getUser(username);
 
   if (!user) {
-    const results: TelegramBot.InlineQueryResultArticle[] = [
-      {
-        type: "article",
-        id: "1",
-        title: `User ${username} not found`,
-        input_message_content: {
-          message_text: `Пользователь *${username}* не найден`,
-          parse_mode: "Markdown", 
-        },
-      },
-    ];
-
-    await bot.answerInlineQuery(query.id, results, { cache_time: 0 });
-    return;
-  }
-
-  // Создаем карточку
-  const data = createData(user);
-  const cardId = await renderImage(data);
-
-  const results: TelegramBot.InlineQueryResultArticle[] = [
-    {
+    return bot.answerInlineQuery(query.id, [{
       type: "article",
-      id: "1",
-      title: user.username,
-      description: `OSU! stats of ${user.username}`,
+      id: "notfound",
+      title: "Не найден",
       input_message_content: {
-        message_text: `[OSU! Profile](${cardId})`,
+        message_text: `Игрок *${username}* не найден`,
         parse_mode: "Markdown",
       },
-      thumb_url: cardId, // если renderImage возвращает ссылку на изображение
-    },
-  ];
+    }]);
+  }
 
-  await bot.answerInlineQuery(query.id, results, { cache_time: 0 });
+  try {
+    const data = createData(user);
+    const cardId = await renderImage(data);
+    const photoPath = path.resolve(__dirname, "../../../tmp", `userCard-${cardId}.jpg`);
+
+    if (!fs.existsSync(photoPath)) throw new Error("No card file");
+
+    // Отправляем в кэш-группу для получения file_id
+    const sent = await bot.sendPhoto(CACHE_CHAT_ID, photoPath, { caption: "cache" });
+    const fileId = sent.photo![sent.photo!.length - 1]!.file_id;
+
+    const caption = `*${user.username}* • osu! std
+Глоб: ${user.statistics.global_rank ? `#${user.statistics.global_rank}` : "—"}
+Страна: ${user.statistics.country_rank ? `#${user.statistics.country_rank}` : "—"} • ${user.country.name}
+PP: ${Math.floor(user.statistics.pp)} • Acc: ${user.statistics.hit_accuracy.toFixed(2)}%`;
+
+    await bot.answerInlineQuery(query.id, [{
+      type: "photo",
+      id: cardId,
+      photo_file_id: fileId,
+      caption,
+      parse_mode: "Markdown",
+    } as TelegramBot.InlineQueryResultCachedPhoto]);
+
+    fs.unlinkSync(photoPath);
+  } catch (err) {
+    console.error("Inline err:", err);
+    await bot.answerInlineQuery(query.id, [{
+      type: "article",
+      id: "error",
+      title: "Ошибка",
+      input_message_content: { message_text: "Не сгенерировал карточку" },
+    }]);
+  }
 });
+
+console.log("📷 Inline handler registered");
