@@ -16,8 +16,8 @@ bot.on("inline_query", async (query) => {
       type: "article",
       id: "help",
       title: "Поиск osu! игрока",
-      description: "Введи ник после @okimichanbot",
-      input_message_content: { message_text: "Введи ник osu! игрока после @okimichanbot" },
+      description: "Введи ник после",
+      input_message_content: { message_text: "Введи ник osu! игрока" },
     }]);
   }
 
@@ -42,14 +42,24 @@ bot.on("inline_query", async (query) => {
 
     if (!fs.existsSync(photoPath)) throw new Error("No card file");
 
-    // Отправляем в кэш-группу для получения file_id
     const sent = await bot.sendPhoto(CACHE_CHAT_ID, photoPath, { caption: "cache" });
     const fileId = sent.photo![sent.photo!.length - 1]!.file_id;
 
-    const caption = `*${user.username}* • osu! std
-Глоб: ${user.statistics.global_rank ? `#${user.statistics.global_rank}` : "—"}
-Страна: ${user.statistics.country_rank ? `#${user.statistics.country_rank}` : "—"} • ${user.country.name}
-PP: ${Math.floor(user.statistics.pp)} • Acc: ${user.statistics.hit_accuracy.toFixed(2)}%`;
+//     const caption = `*${user.username}* • osu! std
+// Глоб: ${user.statistics.global_rank ? `#${user.statistics.global_rank}` : "—"}
+// Страна: ${user.statistics.country_rank ? `#${user.statistics.country_rank}` : "—"} • ${user.country.name}
+// PP: ${Math.floor(user.statistics.pp)} • Acc: ${user.statistics.hit_accuracy.toFixed(2)}%`;
+  const achievements = user.user_achievements;
+  const playcount = user.statistics.play_count;
+  const rankedPoints = (user.statistics.ranked_score / 1000000).toFixed(1);
+  
+  const caption = `
+[osutrack](https://ameobea.me/osutrack/user/${ data.username })
+[osuskills](https://osuskills.com/user/${ data.username })
+*Достижения*: ${ achievements.length }
+*Плейкаунт*: ${ playcount }
+*Рейтинговых очков*: ${ rankedPoints }m
+`;
 
     await bot.answerInlineQuery(query.id, [{
       type: "photo",
