@@ -12,7 +12,7 @@ export default async function sendPhoto({ bot, msg, sent, data, user, cardId }: 
   data: ClearUser;
   user: UserExtended;
   cardId: string;
-}) {
+}): Promise<void> {
   const rootPath = path.resolve(__dirname, "..", "..");
   const cardPath = path.resolve(rootPath, "tmp", `userCard-${ cardId }.jpg`);
 

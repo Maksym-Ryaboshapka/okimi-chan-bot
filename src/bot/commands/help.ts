@@ -1,7 +1,7 @@
 import TelegramBot from "node-telegram-bot-api";
 import type { Message } from "node-telegram-bot-api";
 
-export default async function onHelp(bot: TelegramBot, msg: Message) {
+export default async function onHelp(bot: TelegramBot, msg: Message): Promise<void> {
   const helpMsg = `
 📚 **Справочник команд Okimi-Chan**
 
