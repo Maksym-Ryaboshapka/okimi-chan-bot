@@ -3,9 +3,17 @@ process.env.NTBA_FIX_350 = "true";
 import bot from "./bot";
 import "./bot/inline/inline";
 import { closeBrowser } from "./services/render/renderImage";
+import connectDB from "./db";
 
-bot.startPolling();
-console.log("✅ Bot running");
+async function main() {
+  await connectDB();
+  console.log("✅ DB connected");
 
-process.on("SIGINT", closeBrowser);
-process.on("SIGTERM", closeBrowser);
+  await bot.startPolling();
+  console.log("✅ Bot running");
+
+  process.on("SIGINT", closeBrowser);
+  process.on("SIGTERM", closeBrowser);
+}
+
+main();
