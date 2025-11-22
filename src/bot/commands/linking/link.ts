@@ -4,7 +4,7 @@ import Link from "../../../db/models/Link.ts";
 import getUser from "../../../services/osu/getUser.ts";
 import log from "../../../services/logs/logger.ts";
 
-export default async function onLink(bot: TelegramBot, msg: Message, match: RegExpExecArray | null) {
+export default async function onLink(bot: TelegramBot, msg: Message, match: RegExpExecArray | null): Promise<Message | undefined> {
   const tgName = msg.from?.username;
   const osuName = match && match[1] ? match[1].trim() : null;
 

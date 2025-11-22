@@ -6,7 +6,7 @@ import createData from "../../../services/render/createData.ts";
 import renderImage from "../../../services/render/renderImage.ts";
 import sendPhoto from "../../sendPhoto.ts";
 
-export default async function onMe(bot: TelegramBot, msg: Message) {
+export default async function onMe(bot: TelegramBot, msg: Message): Promise<boolean | Message | undefined> {
   const tgName = msg.from?.username;
 
   if (!tgName) {

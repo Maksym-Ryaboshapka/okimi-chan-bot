@@ -1,7 +1,7 @@
 import TelegramBot from "node-telegram-bot-api";
 import type { Message } from "node-telegram-bot-api";
 
-export default async function onStart(bot: TelegramBot, msg: Message) {
+export default async function onStart(bot: TelegramBot, msg: Message): Promise<void> {
   const startMsg = `
 *📊 Добро пожаловать в Okimi-Chan — вашего помощника для работы со статистикой osu!*
 
@@ -20,6 +20,6 @@ export default async function onStart(bot: TelegramBot, msg: Message) {
 @HELLPER7788 • @ByteMe6 • @ArchiPank
 `;
 
-  bot.sendSticker(msg.chat.id, "CAACAgIAAxkBAAE-NAVpIb_kUswE4rTMPRRfSjvOTsXS_AACZ4EAAulSIUtSawUNN0GDCzYE");
-  bot.sendMessage(msg.chat.id, startMsg, { parse_mode: "Markdown" });
+  await bot.sendSticker(msg.chat.id, "CAACAgIAAxkBAAE-NAVpIb_kUswE4rTMPRRfSjvOTsXS_AACZ4EAAulSIUtSawUNN0GDCzYE");
+  await bot.sendMessage(msg.chat.id, startMsg, { parse_mode: "Markdown" });
 }

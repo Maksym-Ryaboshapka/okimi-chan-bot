@@ -4,7 +4,7 @@ import Link from "../../../db/models/Link.ts";
 import { Queries } from "../../queries.ts";
 import unlinkHandler from "../../handlers/unlinkHandler.ts";
 
-export default async function onUnlink(bot: TelegramBot, msg: Message) {
+export default async function onUnlink(bot: TelegramBot, msg: Message): Promise<Message | undefined> {
   const tgName = msg.from?.username;
 
   if (!tgName) {
