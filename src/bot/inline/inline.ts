@@ -70,6 +70,13 @@ bot.on("inline_query", async (query) => {
       photo_file_id: fileId,
       caption,
       parse_mode: "Markdown",
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: "Профиль пользователя", url: `https://osu.ppy.sh/users/${ user.username }` }
+          ]
+        ]
+      }
     } as TelegramBot.InlineQueryResultCachedPhoto]);
 
     fs.unlinkSync(photoPath);

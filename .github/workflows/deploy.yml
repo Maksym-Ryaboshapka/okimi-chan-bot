@@ -21,5 +21,7 @@ jobs:
           script: |
             cd ~/okimi-chan-bot
             git pull
-            npm install
-            systemctl restart okimi-chan.service
+            
+            docker compose down
+            docker pull
+            docker compose up --build -d
